@@ -1,0 +1,61 @@
+#!/bin/bash
+#assignment number: lab 9
+#student name and student number: Si LIN 041007321
+#lab section: Linux CST8102-334
+#name of the script file:mycalc.sh
+#date: March 30th,2021
+#description: this script permits the user to do addtion and subtraction.
+clear
+addition(){ # calculate the sum of the two parameters passed in 
+   ((result = $1 + $2))
+    echo "addition of $1 and $2 is" $result
+}
+subtraction(){ #calculate the difference between the two parameters passed in
+    ((result = $1 - $2))
+    echo "subtraction of $1 and $2 is" $result
+}
+if [ $# -eq 0 ] # check if there is no parameter
+then            # show the menu 1        
+echo "C) caluclation" 
+echo "X) Exit"
+read -p "please choose a option:" option1
+     if [ $option1 = 'X' ] # if user enter X exit program
+     then
+	     exit
+     else #show the menu 2
+     read -p "Please enter an integer number or X:" option2
+     fi # if end
+     if [ $option2 = 'X' ] # if user enter X exit program
+     then
+	     exit
+     else #show the menu 3
+	     echo "+) Add"
+	     echo "-) Subtract"
+	     echo "X) Exit"
+     read -p " Please enter an + , - , or X to exit:" option3
+     fi
+     if [ $option3 = 'X' ] 
+     then 
+	     exit
+     else
+     read -p "Please enter second integer number or X:" option4
+     if [ $option4 = 'X' ];then exit;fi
+     if [ $option3 = '+' ];then addition $option2 $option4; fi
+     if [ $option3 = '-' ];then subtraction $option2 $option4;fi
+     fi
+elif [ $# -eq 3 ]
+then
+if [ $2 = '+' ]
+then 
+addition $1 $3
+elif [ $2 = '-' ]
+then
+subtraction $1 $3
+else
+echo "Incorrect Operation" $2
+echo " + to additon"
+echo " - to subtraction"
+fi # if end
+else
+   echo "Incorrect Number of Parameters"
+fi

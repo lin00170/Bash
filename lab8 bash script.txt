@@ -1,0 +1,84 @@
+#!/bin/bash
+#assignment number: lab8
+#student name and student number: Si LIN 041007321
+#course and lab section: Linux CST8102-334
+#submission date: March 25th,2021
+#description: this script permits the root user to do user and group management.
+choice="no" # menu gives the root user a choice of five options.If the input is invalid,show again the menu and ask the root user to input again. 
+while [ $choice != "Q" ]
+do
+clear # clean the screen before display the menu after the menu is displayed
+options=("Choose one of the following options:"
+"A Create a user account"
+"B Delete a user account"
+"C Change supplementary group for a user account"
+"D Change initial group for a user account"
+"E Change default login shell for a user account"
+"F Change account expiration date for a user account"
+"Q Quit")
+# sleep function making the system sleep for 3 seconds
+slp(){
+sleep 3
+}
+#
+for i in ${!options[@]}
+do
+echo ${options[$i]}
+done
+read -p "What would you like to do?:" input
+# clean the screen
+clear
+# use if structure, accepte lowercase and uppercase letters.
+if  [ $input =  'A' ]||[ $input = 'a' ]
+then
+read -p "Please enter the user name?:" input1
+read -p "Please enter the user's home dirctory?:" input2
+read -p "Please enter the dafault login shell?:" input3
+useradd -m -d $input2 -s $input3 $input1
+#sleep for 3 seconds
+slp
+#delete the user account and the user's home directory
+elif [ $input =  'B' ]||[ $input = 'b' ]
+then
+read -p "PLease enter the user name that you want to delete?:" input4
+userdel -r $input4
+slp
+
+#add a supplementarty group for the user account
+elif [ $input =  'C' ]||[ $input = 'c' ]
+then
+read -p "Please enter the user name?:" input1
+read -p "Please enter the group name?:" input2
+usermod -G $input2 $input1
+#change the initial group for the user account
+elif [ $input =  'D' ]||[ $input = 'd' ]
+then
+read -p "user name?:"input1
+read -p "group?:"input2
+usermod -g $input2 $input1
+#change the default shell for the user account
+elif [ $input =  'E' ]||[ $input = 'e' ]
+then
+read -p "user name?:" input1
+read -p " shell name?:" input2
+usermod -s $input2 $input1
+slp
+#change the expiration date for the user account
+elif [ $input =  'F' ]||[ $input = 'f' ]
+then
+read -p "user name?:"input1
+read -p " please enter the date as YYYY-MM-DD?:"input2
+usermod -e $input2 $input1
+slp
+#exit
+elif [ $input =  'Q' ]||[ $input = 'q' ]
+then
+choice="Q"
+clear
+else
+echo "invalid input,please try again"
+slp
+fi
+#if statement ends
+done
+#While loop statement ends
